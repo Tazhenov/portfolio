@@ -37,7 +37,7 @@
   position: relative;
   left: 50%;
   transform: translate(-50%, 0);
-  background: #000;
+  background: red;
   color: #fff;
   padding: 12px 40px;
   text-transform: uppercase;
