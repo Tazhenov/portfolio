@@ -82,34 +82,22 @@
         </div>
       </footer>
   <script>
-    // Получаем форму
-const loginForm = document.getElementById('login-form');
+function openFullScreen(img) {
+  var fullScreenImage = document.getElementById("full-screen-image");
+  var closeButton = document.getElementById("close-button");
+  var fullScreenContainer = document.querySelector(".full-screen-image-container");
+  
+  fullScreenImage.src = img.src;
+  fullScreenContainer.classList.add("open");
+}
 
-// Добавляем обработчик события на кнопку отправки формы
-loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+function closeFullScreen() {
+  var fullScreenImage = document.getElementById("full-screen-image");
+  var fullScreenContainer = document.querySelector(".full-screen-image-container");
   
-    // Получаем данные формы
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
-  
-    // Отправляем запрос на сервер для проверки данных
-    // ...
-});
-// Получаем форму
-const loginForm = document.getElementById('login-form');
-
-// Добавляем обработчик события на кнопку отправки формы
-loginForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-  
-    // Получаем данные формы
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
-  
-    // Отправляем запрос на сервер для проверки данных
-    // ...
-});
+  fullScreenImage.src = "";
+  fullScreenContainer.classList.remove("open");
+}
 
   </script>
 </body>
