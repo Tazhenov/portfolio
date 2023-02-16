@@ -1,131 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Portfolio</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/main.css">
-  <script src="script/script.js"></script>
+	<title>Таймер блокировки сайта</title>
+	<style type="text/css">
+		#timer {
+			font-size: 24px;
+			font-weight: bold;
+			text-align: center;
+			padding: 20px;
+			background-color: #F44336;
+			color: white;
+		}
+	</style>
 </head>
 <body>
-  <div class="first">
-    <div class="nav" id="header">
-      <a href="#" id="nav1">Главная</a>
-      <a href="#" id="nav2">Портфолио</a>
-      <a href="#" id="nav3">Отзывы</a>
-      <a href="#" id="nav4">Контакты</a>
-    </div>
-    <div id="timer"></div>
 
-    <br>
-  </div>
-  <div class="container">
-    <div class="image-grid">
-  <img class="thumbnail" src="https://cdn-edge.kwork.ru/files/portfolio/t0/85/c641332351eade8dc73ca9e3f6768872ded2d310-1674285245.webp" onclick="openFullScreen(this)">
-  <img class="thumbnail" src="https://cdn-edge.kwork.ru/files/portfolio/t0/00/4ad5525b714484318f4c2811092ad4f82ff8482a-1674299405.webp" onclick="openFullScreen(this)">
-  <img class="thumbnail" src="https://cdn-edge.kwork.ru/files/portfolio/t0/09/6fecf002defb8736d452225d0baf0b4da9ba0f39-1674235988.webp" onclick="openFullScreen(this)">
-</div>
+	<div id="timer">Сайт будет заблокирован через <span id="time-left"></span></div>
 
-<div class="full-screen-image-container">
-  <img id="full-screen-image" src="" alt="Full screen image">
-  <button id="close-button" onclick="closeFullScreen()">Х</button>
-</div>
+	<script type="text/javascript">
+		// Устанавливаем время в миллисекундах, 1 минута = 60,000 миллисекунд
+		var deadline = new Date().getTime() + 60000;
 
-  </div>
-    <div class="container">
-      <div class="tech">
-        <h1>КАКИЕ ТЕХНОЛОГИИ Я ИСПОЛЬЗУЮ</h1>
-        <form id="login-form">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username">
-  
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password">
-  
-  <input type="submit" value="Login">
-</form>
+		// Устанавливаем интервал проверки каждые 1 секунду
+		var x = setInterval(function() {
 
-        <hr class="line">
-        <p>Вы отдаете свой дизайн в надежные руки, способные сверстать качественный HTML шаблон, отвечающий <br>
-          всем требования современной верстки</p>
-      </div>
-    </div>
-    <div class="container">
-      <div class="cards">
-        <table align="center">
-          <tr>
-            <td class="a1">HTML5 + CSS3 <br> <i class="fa fa-html5"></i> <i class="fa fa-css3"></i></td>
-            <td class="a2">bootstrap<br><p class="bs4">B</p></td>
-            <td class="a3">Чистый код<br><i class="fa fa-code"></i></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-    <br>
-    <br>
-    <br>
-      <footer class="footer">
-        <div class="contacts">
-          <i class="fa fa-vk"></i><br>
-          <i class="fa fa-phone">+7 (771) 360 88 81</i><br>
-          <i class="fa fa-facebook-square"></i><br>
-          <i class="fa fa-envelope"></i>
-        </div>
-      </footer>
-  <script>
-function openFullScreen(img) {
-  var fullScreenImage = document.getElementById("full-screen-image");
-  var closeButton = document.getElementById("close-button");
-  var fullScreenContainer = document.querySelector(".full-screen-image-container");
-  
-  fullScreenImage.src = img.src;
-  fullScreenContainer.classList.add("open");
-}
+		  // Получаем текущее время в миллисекундах
+		  var now = new Date().getTime();
 
-function closeFullScreen() {
-  var fullScreenImage = document.getElementById("full-screen-image");
-  var fullScreenContainer = document.querySelector(".full-screen-image-container");
-  
-  fullScreenImage.src = "";
-  fullScreenContainer.classList.remove("open");
-}
-<script type="text/javascript">
-// Устанавливаем время в миллисекундах, 2 часа = 7,200,000 миллисекунд
-var deadline = new Date().getTime() + 7200000;
+		  // Вычисляем разницу между текущим временем и временем дедлайна
+		  var distance = deadline - now;
 
-// Устанавливаем интервал проверки каждые 1 секунду
-var x = setInterval(function() {
+		  // Рассчитываем время для отображения на странице
+		  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Получаем текущее время в миллисекундах
-  var now = new Date().getTime();
+		  // Отображаем время на странице
+		  document.getElementById("time-left").innerHTML = minutes + "мин " + seconds + "сек ";
 
-  // Вычисляем разницу между текущим временем и временем дедлайна
-  var distance = deadline - now;
+		  // Если время истекло, блокируем сайт
+		  if (distance < 0) {
+		    clearInterval(x);
+		    document.getElementById("timer").innerHTML = "Сайт заблокирован!";
+		    // Редирект на другую страницу или скрываем кнопку оплаты
+		    // window.location.href = "https://example.com/";
+		    // document.getElementById("payment-button").style.display = "none";
+		  }
+		}, 1000);
+	</script>
 
-  // Рассчитываем время для отображения на странице
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Отображаем время на странице
-  document.getElementById("timer").innerHTML = hours + "ч "
-  + minutes + "мин " + seconds + "сек ";
-
-  // Если время истекло, блокируем сайт
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("timer").innerHTML = "Сайт заблокирован!";
-    // Редирект на другую страницу или скрываем кнопку оплаты
-    // window.location.href = "https://example.com/";
-    // document.getElementById("payment-button").style.display = "none";
-  }
-}, 1000);
-</script>
-
-  </script>
 </body>
 </html>
