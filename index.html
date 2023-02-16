@@ -19,6 +19,7 @@
       <a href="#" id="nav3">Отзывы</a>
       <a href="#" id="nav4">Контакты</a>
     </div>
+    <div id="timer"></div>
 
     <br>
   </div>
@@ -92,6 +93,38 @@ function closeFullScreen() {
   fullScreenImage.src = "";
   fullScreenContainer.classList.remove("open");
 }
+<script type="text/javascript">
+// Устанавливаем время в миллисекундах, 2 часа = 7,200,000 миллисекунд
+var deadline = new Date().getTime() + 7200000;
+
+// Устанавливаем интервал проверки каждые 1 секунду
+var x = setInterval(function() {
+
+  // Получаем текущее время в миллисекундах
+  var now = new Date().getTime();
+
+  // Вычисляем разницу между текущим временем и временем дедлайна
+  var distance = deadline - now;
+
+  // Рассчитываем время для отображения на странице
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Отображаем время на странице
+  document.getElementById("timer").innerHTML = hours + "ч "
+  + minutes + "мин " + seconds + "сек ";
+
+  // Если время истекло, блокируем сайт
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("timer").innerHTML = "Сайт заблокирован!";
+    // Редирект на другую страницу или скрываем кнопку оплаты
+    // window.location.href = "https://example.com/";
+    // document.getElementById("payment-button").style.display = "none";
+  }
+}, 1000);
+</script>
 
   </script>
 </body>
